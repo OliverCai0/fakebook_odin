@@ -1,2 +1,31 @@
 <%= render "shared/navbar"%>
-<h1>Hello!</h1>
+<div class="row">
+	<div class="col-sm"></div>
+	<div class="col-sm" >
+		<h1>Hello!</h1>
+	</div>
+	<div class="col-sm"></div>
+</div>
+<div class="row">
+	<div class="col-sm">
+		<h1>Form</h1>
+		<%= form_with(url: users_path, method: :get) do |form| %>
+			<div class="field">
+				<label>Username Lookup</label>
+				<%= form.text_field :username %>
+			</div>
+			<%= form.submit "Search "%>
+		<% end %>
+		<% if defined?(@selected_users)%>
+			<h1> Found <%= @selected_users.username %></h1>
+			<%= form_with(url: friend_requests_path, method: :post) do |form| %>
+				<%= form.hidden_field :reciepent_id, value: @selected_users.id%>
+				<%= form.hidden_field :sender_id, value: current_user.id%>
+				<label> Send Request?</label>
+				<%= form.submit "Request" %>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="col-sm"></div>
+	<div class="col-sm"></div>
+</div>
